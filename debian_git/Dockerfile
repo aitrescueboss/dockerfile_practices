@@ -27,14 +27,21 @@ FROM debian
 ###############################################################
 RUN set -ex && \
     cd /tmp && \
+    # (1) apt-getで，「gitの最新版ソースを落とすためのgit」と，gitのmakeに必要なパッケージをインストール
     apt-get update && \
     apt-get install -y git libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev make gcc  && \
+    # (2) gitの最新版ソースをクローン
     git clone git://git.kernel.org/pub/scm/git/git.git && \
+    # (3) クローンしてきたソースをmake
     cd ./git  && \
     make prefix=/usr/local all  && \
     make prefix=/usr/local install  && \
+    # (4) 余分なものを消す
+    #     クローンしたソースのディレクトリ
     cd .. && rm -r git  && \
+    #     gitのmakeに必要なパッケージ
     apt-get remove -y git libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev make gcc  && \
+    #     各種依存パッケージ
     apt-get autoremove -y && \
     apt-get clean
 
