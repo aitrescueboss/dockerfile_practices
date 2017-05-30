@@ -49,3 +49,9 @@ RUN set -ex && \
 #
 # 参考文献
 # [1] https://git-scm.com/, 「1.4 使い始める - Gitのインストール」
+#
+# メモ
+#   Dockerのイメージ生成
+#     $ docker build -t <tag> <Dockerfile-dir-path>
+#   Dockerイメージの実行
+#     $ docker run <tag> [-it|--rm|...]
